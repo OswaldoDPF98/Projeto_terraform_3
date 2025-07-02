@@ -27,16 +27,41 @@ resource "aws_internet_gateway" "gateway_de_internet" {
   }
 }
 
-resource "aws_route_table" "tabla_de_ruta" {
+resource "aws_route_table" "tabela_de_rota" {
   vpc_id = aws_vpc.padrao.id
 
   tags = {
-    Name = "Tabla de ruta pública   "
+    Name = "Tabela de rota pública   "
   }
 }
 
-resource "aws_route" "ruta" {
-  route_table_id = aws_route_table.tabla_de_ruta.id
+resource "aws_route" "rota" {
+  route_table_id = aws_route_table.tabela_de_rota.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.gateway_de_internet.id
+}
+
+resource "aws_route_table_association" "asociacao_publica" {
+  subnet_id = aws_subnet.subred_publica.id
+  route_table_id = aws_route_table.tabela_de_rota.id
+}
+
+resource "aws_security_group" "grupo_de_seguranca" {
+  name = "Grupo de seguranca"
+  description = "Grupo de seguranca"
+  vpc_id = aws_vpc.padrao.id
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
