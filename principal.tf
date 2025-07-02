@@ -26,3 +26,17 @@ resource "aws_internet_gateway" "gateway_de_internet" {
     Name = "Gateway de Internet"
   }
 }
+
+resource "aws_route_table" "tabla_de_ruta" {
+  vpc_id = aws_vpc.padrao.id
+
+  tags = {
+    Name = "Tabla de ruta pública   "
+  }
+}
+
+resource "aws_route" "ruta" {
+  route_table_id = aws_route_table.tabla_de_ruta.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.gateway_de_internet.id
+}
