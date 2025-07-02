@@ -5,3 +5,7 @@ Este repositório contém exemplos e módulos básicos para automatizar a criaç
 ## Como encontrar a AMI do Debian
 Para obter o ID da AMI do Debian 12 na região sa-east-1, você pode usar o seguinte comando no terminal:
 aws ec2 describe-images --filters "Name=name,Values=debian-12-amd64-*" --region sa-east-1
+
+## Gerando uma chave SSH Ed25519
+Para criar um novo par de chaves SSH utilizando o algoritmo Ed25519 (recomendado por ser mais seguro e eficiente que RSA), execute o seguinte comando no terminal:
+ssh-keygen -t ed25519

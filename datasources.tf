@@ -21,3 +21,8 @@ data "aws_ami" "debian" {
     values = ["x86_64"]
   }
 }
+
+
+# Para acessar a instância via SSH, gere uma chave pública com o comando:
+# ssh-keygen -t ed25519
+# Em seguida, utilize o arquivo .pub gerado para cadastrar a chave na AWS.
