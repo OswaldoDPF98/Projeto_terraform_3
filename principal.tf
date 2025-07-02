@@ -66,3 +66,7 @@ resource "aws_security_group" "grupo_de_seguranca" {
   }
 }
 
+resource "aws_key_pair" "autorizacao" {
+  key_name = "chave-ssh"
+    public_key = file("~/.ssh/id_ed25519.pub") # Altere o caminho para o arquivo da sua chave pública SSH
+}
