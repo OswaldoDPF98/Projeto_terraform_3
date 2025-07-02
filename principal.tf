@@ -70,3 +70,20 @@ resource "aws_key_pair" "autorizacao" {
   key_name = "chave-ssh"
     public_key = file("~/.ssh/id_ed25519.pub") # Altere o caminho para o arquivo da sua chave pública SSH
 }
+
+resource "aws_instance" "nodo_desenvolvimento" {
+  ami           = data.aws_ami.debian.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.subred_publica.id
+  key_name      = aws_key_pair.autorizacao.key_name
+  vpc_security_group_ids = [ aws_security_group.grupo_de_seguranca.id ]
+  user_data = file("userdata.tpl")
+
+  root_block_device {
+    volume_size = 10
+  }
+
+  tags = {
+    Name = "Nodo de Desenvolvimento"
+  }
+}
