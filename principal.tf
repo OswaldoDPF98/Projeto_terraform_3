@@ -65,3 +65,4 @@ resource "aws_security_group" "grupo_de_seguranca" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
