@@ -10,7 +10,10 @@ aws ec2 describe-images --filters "Name=name,Values=debian-12-amd64-*" --region 
 Para criar um novo par de chaves SSH utilizando o algoritmo Ed25519 (recomendado por ser mais seguro e eficiente que RSA), execute o seguinte comando no terminal:
 ssh-keygen -t ed25519
 
+## Obtendo o IP público da instância EC2 com Terraform
+Para descobrir o endereço IP público da sua instância EC2 já provisionada, utilize o comando abaixo no terminal:
+terraform state show <nome_do_recurso>
+
 ## Conectando-se à instância EC2 via SSH
 Após a instância EC2 ser provisionada e a chave SSH estar registrada na AWS, você pode se conectar a ela utilizando o seguinte comando no seu terminal:
 ssh -i ~/.ssh/id_ed25519 admin@<IP_PÚBLICO_DA_INSTANCIA>
-
