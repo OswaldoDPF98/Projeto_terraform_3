@@ -17,3 +17,23 @@ terraform state show <nome_do_recurso>
 ## Conectando-se à instância EC2 via SSH
 Após a instância EC2 ser provisionada e a chave SSH estar registrada na AWS, você pode se conectar a ela utilizando o seguinte comando no seu terminal:
 ssh -i ~/.ssh/id_ed25519 admin@<IP_PÚBLICO_DA_INSTANCIA>
+
+## Automatizando a conexão SSH (Configuração no ~/.ssh/config)
+Para simplificar a conexão SSH com a sua instância EC2, você pode adicionar uma entrada no seu arquivo de configuração SSH (`~/.ssh/config`). Isso permite que você se conecte usando um alias curto, sem precisar digitar o IP completo e o caminho da chave a cada vez.
+Execute o seguinte script no seu terminal **após o `terraform apply`**:
+```bash
+# Define um alias para a conexão SSH
+HOST_ALIAS="meu-servidor" # Você pode mudar este nome
+# Obtém o IP público da instância usando o output do Terraform
+HOSTNAME=$(terraform output -raw public_ip)
+# Define o usuário SSH e o caminho da chave privada
+USER="admin"
+IDENTITY_FILE="$HOME/.ssh/id_ed25519"
+# Adiciona a configuração ao arquivo ~/.ssh/config
+cat << EOF >> ~/.ssh/config
+Host ${HOST_ALIAS}
+    HostName ${HOSTNAME}
+    User ${USER}
+    IdentityFile ${IDENTITY_FILE}
+EOF
+echo "Configuração SSH adicionada! Agora você pode conectar com: ssh ${HOST_ALIAS}"
